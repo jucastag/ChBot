@@ -60,5 +60,15 @@
     "memoria_ram": "8/12 GB",
     "almacenamiento": "128/256 GB",
     "camara_principal": "48 MP + 50 MP + 8 MP + 2 MP"
+  },
+  {
+    "modelo": "OnePlus 19 Pro",
+    "marca": "OnePlus19",
+    "pantalla": "Fluid AMOLED, 6.7 pulgadas",
+    "resolucion_pantalla": "1440 x 3216 píxeles",
+    "procesador": "Qualcomm Snapdragon 888",
+    "memoria_ram": "8/12 GB",
+    "almacenamiento": "128/256 GB",
+    "camara_principal": "48 MP + 50 MP + 8 MP + 2 MP"
   }
 ]
