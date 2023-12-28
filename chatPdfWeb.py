@@ -13,6 +13,7 @@ app = Flask(__name__)
 openai.api_key = os.environ.get('OPENAI_API_KEY') # Modifique para que tome automaticamente la Api key
 #os.environ["OPENAI_API_KEY"] = 'sk-EaeQbeRR3neMAVsgHGpaT3BlbkFJfjZVs63KKcuN#bIASZ7f9'
 os.environ["OPENAI_API_KEY"] = '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'
+#ahi hice un commit
 
 def cargar_datos(pregunta):
     # Leer los PDFs
