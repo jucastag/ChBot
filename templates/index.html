@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+  </head>
+  <body>
+    <button id="chat-toggle" class="chat-toggle-button" onclick="toggleChatbot()">
+      <img id="chat-toggle-icon" src="/static/img/button.svg" alt="">
+    </button>
+    <button id="chat-toggle2" class="chat-toggle-button" style="display: none;" onclick="toggleChatbot()">
+      <img id="chat-cross-icon" src="/static/img/Icon-ionic-md-close.svg" alt="">
+    </button>
+    <div id="chat-container" class="chat-container">
+      <div class="chat-header">
+        <div class="contenedor">
+          <img class="robot" src="/static/img/robot.svg" alt="">
+          <p>{{ chatbot_name }}</p>
+        </div>
+        <button class="close-button" onclick="closeChatbot()">Cerrar</button>
+      </div>
+      <div id="chat-messages" class="chat-messages"></div>
+      <div class="chat-input">
+        <input id="user-input" type="text" onkeydown="sendMessage(event)" placeholder="Escribe tu mensaje aquí...">
+        <button id="send-button" onclick="sendMessage(event)" disabled></button>
+      </div>
+    </div>
+  </body>
+</html>

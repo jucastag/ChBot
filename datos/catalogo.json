@@ -1,0 +1,64 @@
+[
+  {
+    "modelo": "Samsung Galaxy S21",
+    "marca": "Samsung",
+    "pantalla": "Dynamic AMOLED 2X, 6.2 pulgadas",
+    "resolucion_pantalla": "3200 x 1440 píxeles",
+    "procesador": "Exynos 2100 / Qualcomm Snapdragon 888",
+    "memoria_ram": "8 GB",
+    "almacenamiento": "128/256/512 GB",
+    "camara_principal": "12 MP + 12 MP + 64 MP",
+    "camara_frontal": "10 MP",
+    "sistema_operativo": "Android 11",
+    "bateria": "4000 mAh"
+  },
+  {
+    "modelo": "iPhone 12 Pro",
+    "marca": "Apple",
+    "pantalla": "Super Retina XDR, 6.1 pulgadas",
+    "resolucion_pantalla": "2532 x 1170 píxeles",
+    "procesador": "Apple A14 Bionic",
+    "memoria_ram": "6 GB",
+    "almacenamiento": "128/256/512 GB",
+    "camara_principal": "12 MP + 12 MP + 12 MP",
+    "camara_frontal": "12 MP",
+    "sistema_operativo": "iOS 14",
+    "bateria": "2815 mAh"
+  },
+  {
+    "modelo": "Google Pixel 5",
+    "marca": "Google",
+    "pantalla": "OLED, 6.0 pulgadas",
+    "resolucion_pantalla": "2340 x 1080 píxeles",
+    "procesador": "Qualcomm Snapdragon 765G",
+    "memoria_ram": "8 GB",
+    "almacenamiento": "128 GB",
+    "camara_principal": "12.2 MP + 16 MP",
+    "camara_frontal": "8 MP",
+    "sistema_operativo": "Android 11",
+    "bateria": "4080 mAh"
+  },
+  {
+    "modelo": "Huawei P40 Pro",
+    "marca": "Huawei",
+    "pantalla": "OLED, 6.58 pulgadas",
+    "resolucion_pantalla": "2640 x 1200 píxeles",
+    "procesador": "HiSilicon Kirin 990 5G",
+    "memoria_ram": "8 GB",
+    "almacenamiento": "128/256/512 GB",
+    "camara_principal": "50 MP + 40 MP + 12 MP + TOF 3D",
+    "camara_frontal": "32 MP + TOF 3D",
+    "sistema_operativo": "EMUI 10.1 (basado en Android 10)",
+    "bateria": "4200 mAh"
+  },
+  {
+    "modelo": "OnePlus 9 Pro",
+    "marca": "OnePlus",
+    "pantalla": "Fluid AMOLED, 6.7 pulgadas",
+    "resolucion_pantalla": "1440 x 3216 píxeles",
+    "procesador": "Qualcomm Snapdragon 888",
+    "memoria_ram": "8/12 GB",
+    "almacenamiento": "128/256 GB",
+    "camara_principal": "48 MP + 50 MP + 8 MP + 2 MP"
+  }
+]
