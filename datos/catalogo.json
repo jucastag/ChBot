@@ -10,7 +10,10 @@
     "camara_principal": "12 MP + 12 MP + 64 MP",
     "camara_frontal": "10 MP",
     "sistema_operativo": "Android 11",
-    "bateria": "4000 mAh"
+    "bateria": "4000 mAh",
+    "performance_and_speed": "High",
+    "camera_quality": "High",
+    "display_quality": "High"
   },
   {
     "modelo": "iPhone 12 Pro",
@@ -23,7 +26,10 @@
     "camara_principal": "12 MP + 12 MP + 12 MP",
     "camara_frontal": "12 MP",
     "sistema_operativo": "iOS 14",
-    "bateria": "2815 mAh"
+    "bateria": "2815 mAh",
+    "performance_and_speed": "High",
+    "camera_quality": "High",
+    "display_quality": "High"
   },
   {
     "modelo": "Google Pixel 5",
@@ -36,7 +42,10 @@
     "camara_principal": "12.2 MP + 16 MP",
     "camara_frontal": "8 MP",
     "sistema_operativo": "Android 11",
-    "bateria": "4080 mAh"
+    "bateria": "4080 mAh",
+    "performance_and_speed": "Medium",
+    "camera_quality": "Medium",
+    "display_quality": "High"
   },
   {
     "modelo": "Huawei P40 Pro",
@@ -49,7 +58,10 @@
     "camara_principal": "50 MP + 40 MP + 12 MP + TOF 3D",
     "camara_frontal": "32 MP + TOF 3D",
     "sistema_operativo": "EMUI 10.1 (basado en Android 10)",
-    "bateria": "4200 mAh"
+    "bateria": "4200 mAh",
+    "performance_and_speed": "Medium",
+    "camera_quality": "High",
+    "display_quality": "High"
   },
   {
     "modelo": "OnePlus 9 Pro",
@@ -59,7 +71,10 @@
     "procesador": "Qualcomm Snapdragon 888",
     "memoria_ram": "8/12 GB",
     "almacenamiento": "128/256 GB",
-    "camara_principal": "48 MP + 50 MP + 8 MP + 2 MP"
+    "camara_principal": "48 MP + 50 MP + 8 MP + 2 MP",
+    "performance_and_speed": "High",
+    "camera_quality": "High",
+    "display_quality": "High"
   },
   {
     "modelo": "OnePlus 19 Pro",
@@ -69,6 +84,9 @@
     "procesador": "Qualcomm Snapdragon 888",
     "memoria_ram": "8/12 GB",
     "almacenamiento": "128/256 GB",
-    "camara_principal": "48 MP + 50 MP + 8 MP + 2 MP"
+    "camara_principal": "48 MP + 50 MP + 8 MP + 2 MP",
+    "performance_and_speed": "High",
+    "camera_quality": "High",
+    "display_quality": "High"
   }
 ]

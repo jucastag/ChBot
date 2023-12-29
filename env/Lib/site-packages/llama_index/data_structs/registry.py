@@ -8,13 +8,13 @@ from llama_index.data_structs.data_structs import (
     IndexDict,
     IndexGraph,
     IndexList,
-    KeywordTable,
     IndexStruct,
+    KeywordTable,
+    MultiModelIndexDict,
 )
+from llama_index.data_structs.document_summary import IndexDocumentSummary
 from llama_index.data_structs.struct_type import IndexStructType
 from llama_index.data_structs.table import PandasStructTable, SQLStructTable
-from llama_index.data_structs.document_summary import IndexDocumentSummary
-
 
 INDEX_STRUCT_TYPE_TO_INDEX_STRUCT_CLASS: Dict[IndexStructType, Type[IndexStruct]] = {
     IndexStructType.TREE: IndexGraph,
@@ -26,4 +26,5 @@ INDEX_STRUCT_TYPE_TO_INDEX_STRUCT_CLASS: Dict[IndexStructType, Type[IndexStruct]
     IndexStructType.KG: KG,
     IndexStructType.EMPTY: EmptyIndexStruct,
     IndexStructType.DOCUMENT_SUMMARY: IndexDocumentSummary,
+    IndexStructType.MULTIMODAL_VECTOR_STORE: MultiModelIndexDict,
 }

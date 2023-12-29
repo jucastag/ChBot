@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\comendoz\Desktop\VSCodeSelenium\Dev_Python\env
+set VIRTUAL_ENV=C:\Users\jucastag\Documents\00-Juan\00-Proyecto\000-TELEFONICA-CHATBOT\ChBot\env
 
 if not defined PROMPT set PROMPT=$P$G
 

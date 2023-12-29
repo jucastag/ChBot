@@ -4,15 +4,14 @@ from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader, LLMPredictor
 from langchain.chat_models import ChatOpenAI
 from flask import Flask, request
 from flask import Flask, render_template
-
+from config import OPENAI_API_KEY
 
 app = Flask(__name__)
 
-
 # Cambia esto por tu API de OpenAI
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 openai.api_key = os.environ.get('OPENAI_API_KEY') # Modifique para que tome automaticamente la Api key
-#os.environ["OPENAI_API_KEY"] = 'sk-EaeQbeRR3neMAVsgHGpaT3BlbkFJfjZVs63KKcuN#bIASZ7f9'
-os.environ["OPENAI_API_KEY"] = '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'
+
 #ahi hice un commit
 
 def cargar_datos(pregunta):
@@ -28,13 +27,10 @@ def cargar_datos(pregunta):
     #index.as_query_engine().query(pregunta)
     return index.as_query_engine().query(pregunta)
 
-
-
 @app.route('/')
 def index():
     chatbot_name = 'Chatcel' # reemplaza esto con el nombre de tu chatbot
     return render_template('index.html', chatbot_name=chatbot_name)
-
 
 @app.route('/openai') # type: ignore
 def query():
@@ -53,7 +49,6 @@ def query():
     except Exception as e:
         print(f"Error: {e}")
         return f"Ocurrió un error al procesar la solicitud: {str(e)}"
-
 
 if __name__ == '__main__':
     app.run(debug=False, host='localhost',port= 8080)
