@@ -20,4 +20,4 @@ Tu run the App:
 run the script chatWeb.py and open link: http://localhost:8080
 
 To process the catalogue:
-Run script preocess-catalogo.py. It reads the json in 'datos', splits the file into separate json for each phone model with embeddings added.
+Run script process-catalogo.py. It reads the json in 'datos' folder, then it splits the file into separate json for each phone model with embeddings added and store them in 'output' folder.
