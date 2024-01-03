@@ -1,31 +1,56 @@
 import os
-import openai
-from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader, LLMPredictor, ServiceContext
-from langchain.chat_models import ChatOpenAI
+import json
 from flask import Flask, request
 from flask import Flask, render_template
-from config import OPENAI_API_KEY
+from langchain.chat_models import AzureChatOpenAI
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 
-# Cambia esto por tu API de OpenAI
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-openai.api_key = os.environ.get('OPENAI_API_KEY') # Modifique para que tome automaticamente la Api key
+load_dotenv()
 
-#ahi hice un commit
+os.environ['OPENAI_API_KEY'] = os.getenv("OPENAI_API_KEY")
+os.environ['OPENAI_API_TYPE'] = os.getenv("OPENAI_API_TYPE")
+os.environ['OPENAI_API_VERSION'] = os.getenv("OPENAI_API_VERSION")
+os.environ['OPENAI_API_BASE'] = os.getenv("OPENAI_API_BASE")
 
 def cargar_datos(pregunta):
     # Leer los PDFs
-    pdf = SimpleDirectoryReader('datos').load_data()
 
-    # Definir e instanciar el modelo
-    modelo = LLMPredictor(llm=ChatOpenAI(temperature=0, model_name='gpt-3.5-turbo')) # type: ignore
+    llm = AzureChatOpenAI(
+        deployment_name="chat",
+        model_name="gpt-35-turbo-16k"
+    )
 
-    # Indexar el contenido de los PDFs
-    service_context = ServiceContext.from_defaults(llm_predictor=modelo)
-    index = GPTVectorStoreIndex.from_documents(pdf, service_context=service_context)
-    #index.as_query_engine().query(pregunta)
-    return index.as_query_engine().query(pregunta)
+    # Carga del catálogo desde el archivo JSON
+    catalog_path = os.path.join("datos", "catalogo.json")
+    with open(catalog_path, "r", encoding="utf-8") as file:
+        catalogo = json.load(file)
+        
+    from langchain.schema import (
+        SystemMessage,
+        HumanMessage,
+        AIMessage
+    )
+
+    # Agregar el catálogo al prompt
+    messages = [
+        SystemMessage(content=f"""Sos un vendedor de telefonos celulares y deberás responder en español. Dar explicaciones de las decisiones y por qué se recomienda ese modelo particular, en lenguaje coloquial y sin términos demasiado técnicos, junto con otras alternativas en caso de querer opciones. Solo recomienda modelos de telefonos que esten disponibles en el catalogo. Los telefonos estan segmentados en 'performance_and_speed', 'camera_quality' y 'display_quality' (high, medium y low). Intenta identificar las caracteristicas deseadas por el usuario para dar recomendacion sobre modelos del catalogo.
+
+        Catalogo    
+        {json.dumps(catalogo, indent=4, ensure_ascii=False)}
+        """)
+    ]
+
+    messages.append(
+        HumanMessage(
+            content=pregunta
+        )
+    )
+
+    AIMessage = llm(messages)
+
+    return AIMessage
 
 @app.route('/')
 def index():
@@ -38,14 +63,15 @@ def query():
     
     if not pregunta or pregunta.strip() == "." or pregunta.strip() == "":
         return "Por favor, haz una pregunta válida referida al catálogo de celulares."
-
-    pregunta += " Sos un vendedor de telefonos celulares y deberás responder en español. Dar explicaciones de las decisiones y por qué se recomienda ese modelo particular, en lenguaje coloquial y sin términos demasiado técnicos, junto con otras alternativas en caso de querer opciones"
     print(f"pregunta: {pregunta}")
 
     try:
-        respuesta = cargar_datos(pregunta)
+        respuesta = str(cargar_datos(pregunta))
         print(f"Respuesta: {respuesta}")
-        return respuesta.response # type: ignore
+        respuesta = respuesta[9:].replace('\\n\\n', '<br><br>')
+        respuesta = respuesta[:-1]
+        return respuesta
+    
     except Exception as e:
         print(f"Error: {e}")
         return f"Ocurrió un error al procesar la solicitud: {str(e)}"

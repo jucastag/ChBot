@@ -47,3 +47,7 @@ urllib3==1.26.16
 Werkzeug==2.3.6
 yarl==1.9.2
 gunicorn==20.1.0
+flask
+python-dotenv
+langchain
+openai
