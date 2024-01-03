@@ -52,7 +52,7 @@ def retrieve_documents(input: str) -> str:
     search_results = []
     search_query = input
     try:
-        filterQuery = "(performance_and_speed eq 'Medium') and (camera_quality eq 'Medium') and (display_quality eq 'High')"
+        filterQuery = ""
         start_time = time.time()
         embeddings_query = generate_embeddings(search_query)
         response_time =  round(time.time() - start_time,2)
