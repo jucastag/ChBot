@@ -60,7 +60,7 @@ text = """
     Hola, busco un celular que sea el mejor
 """
 
-tldr_function = kernel.create_semantic_function(prompt_template=sk_prompt, max_tokens=2048, temperature=0, top_p=0.5)
+tldr_function = kernel.create_semantic_function(prompt_template=sk_prompt, max_tokens=300, temperature=0, top_p=0.5)
 
 summary = tldr_function(text)
 
