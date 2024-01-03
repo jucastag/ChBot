@@ -1,0 +1,22 @@
+{
+    "schema": 1,
+    "description": "Generate filter query string from user ask",
+    "type": "completion",
+    "completion": {
+      "max_tokens": 1000,
+      "temperature": 0.0,
+      "top_p": 0.0,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0
+    },
+    "input": {
+      "parameters": [
+        {
+          "name": "ask",
+          "description": "User ask about cellphone required or wanted",
+          "defaultValue": "",
+          "required": true	
+        }
+      ]
+    }
+  }

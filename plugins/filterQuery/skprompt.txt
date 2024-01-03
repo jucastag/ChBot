@@ -1,0 +1,23 @@
+## Task Goal
+
+Based on the user ASK generate a filter query string as the examples below if posible. If you think is not posible to infer a filter query string from the ask, leave the filte query string as an empty string ""
+
+## Task instructions
+This function is used to create a filter query string from the user ask to be used later in Azure Cognitive Searchfor filtering purposes.
+Data stored in Cognitive search are cellphone models and they have metadata values for 'performance_and_speed' 'camera_quality' and 'display_quality' with 'High' 'Medium' or 'Low' posible values.
+Users will use spanish and you should try to guess if a filter query string could be generated from the ask. 
+
+Filter query string example N°1: (performance_and_speed eq 'Medium') and (camera_quality eq 'Medium') and (display_quality eq 'High')
+Filter query string example N°2: (performance_and_speed eq 'Medium') and (camera_quality eq 'Medium' or camera_quality eq 'Low') and (display_quality eq 'High' or display_quality eq 'Medium')
+
+If a filter query string could be infered from ask, a filter query string is generated to search for sources.
+If you think is not posible to infer a filter query string from the ask, leave the filte query string as an empty string ""
+
+- The output is a string object with the generated filter query string.
+- Do not include the word json at begginning of the output.
+- The output should not include the word ANSWER.
+
+## Task Input:
+"ASK": "{{$ask}}"
+
+## Task Output:

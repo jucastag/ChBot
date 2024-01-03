@@ -8,8 +8,8 @@ import requests
 import tiktoken
 import time
 import urllib.parse
-from azure.cosmos import CosmosClient
-from azure.cosmos.partition_key import PartitionKey 
+#from azure.cosmos import CosmosClient
+#from azure.cosmos.partition_key import PartitionKey 
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
 from tenacity import retry, wait_random_exponential, stop_after_attempt

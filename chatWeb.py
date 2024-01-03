@@ -1,9 +1,9 @@
 import os
-from flask import Flask, request
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from langchain.chat_models import AzureChatOpenAI
 from retrieval import retrieve_documents
 from dotenv import load_dotenv
+#from filterquery import filterQuery
 
 app = Flask(__name__)
 
@@ -19,6 +19,7 @@ os.environ['OPENAI_API_TYPE'] = os.getenv("OPENAI_API_TYPE")
 os.environ['OPENAI_API_VERSION'] = os.getenv("OPENAI_API_VERSION")
 os.environ['OPENAI_API_BASE'] = os.getenv("OPENAI_API_BASE")
 os.environ['AZURE_OPENAI_EMBEDDING_MODEL'] = os.getenv("AZURE_OPENAI_EMBEDDING_MODEL")
+os.environ['AZURE_OPENAI_DEPLOYMENT'] = os.getenv("AZURE_OPENAI_DEPLOYMENT")
 
 def cargar_datos(pregunta, relevant_documents):
 
@@ -64,14 +65,17 @@ def query():
     if not pregunta or pregunta.strip() == "." or pregunta.strip() == "":
         return "Por favor, haz una pregunta válida referida al catálogo de celulares."
     print(f"pregunta: {pregunta}")
+    #ask = str(pregunta)
+    #filter_query = filterQuery(ask)
 
     try:
         relevant_documents = retrieve_documents(pregunta)
         print(f"Sources: {relevant_documents}")
+        #print(f"Filter query: {filter_query}")
         respuesta = str(cargar_datos(pregunta, relevant_documents))
         print(f"Respuesta: {respuesta}")
         respuesta = respuesta[9:].replace('\\n\\n', '<br><br>')
-        respuesta = respuesta[:-36]
+        respuesta = respuesta[:-1]
         return respuesta
     
     except Exception as e:

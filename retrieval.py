@@ -32,8 +32,6 @@ AZURE_SEARCH_SEMANTIC_SEARCH_LANGUAGE = os.environ.get("AZURE_SEARCH_SEMANTIC_SE
 AZURE_SEARCH_ENABLE_IN_DOMAIN = os.environ.get("AZURE_SEARCH_ENABLE_IN_DOMAIN") or "true"
 AZURE_SEARCH_ENABLE_IN_DOMAIN =  True if AZURE_SEARCH_ENABLE_IN_DOMAIN == "true" else False
 
-
-#FILTER_QUERY = os.environ.get("FILTER_QUERY", "")
 AZURE_SEARCH_TOP_K = os.environ.get("AZURE_SEARCH_CONTENT_COLUMNS") or "3"
 
 def generate_embeddings(text):
@@ -52,7 +50,7 @@ def retrieve_documents(input: str) -> str:
     search_results = []
     search_query = input
     try:
-        filterQuery = ""
+        #filterQuery = ""
         start_time = time.time()
         embeddings_query = generate_embeddings(search_query)
         response_time =  round(time.time() - start_time,2)
@@ -61,7 +59,7 @@ def retrieve_documents(input: str) -> str:
         # prepare body
         body = {
             "select": "modelo,marca,pantalla,resolucion_pantalla,procesador,memoria_ram,almacenamiento,camara_principal,camara_frontal,sistema_operativo,bateria,performance_and_speed,camera_quality,display_quality",
-            "filter": filterQuery,
+            #"filter": filter_query,
             "top": int(AZURE_SEARCH_TOP_K)
         }    
         if AZURE_SEARCH_APPROACH == TERM_SEARCH_APPROACH:
