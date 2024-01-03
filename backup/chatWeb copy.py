@@ -21,6 +21,7 @@ os.environ['OPENAI_API_BASE'] = os.getenv("OPENAI_API_BASE")
 os.environ['AZURE_OPENAI_EMBEDDING_MODEL'] = os.getenv("AZURE_OPENAI_EMBEDDING_MODEL")
 
 def cargar_datos(pregunta, relevant_documents):
+    # Leer los PDFs
 
     llm = AzureChatOpenAI(
         deployment_name="chat",
