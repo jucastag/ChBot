@@ -14,6 +14,10 @@ OPENAI_API_VERSION= '2023-05-15' # adjust as neccesary
 
 OPENAI_API_BASE= 'your_azure_openai_endpoint_here'
 
+AZURE_OPENAI_EMBEDDING_DEPLOYMENT="text-embedding-ada-002" # adjust as neccesary
+
+AZURE_OPENAI_SERVICE_NAME="your_azure_openai_service_name_here"
+
 Install other dependencies if needed (langchain, flask, openai, python-dotenv etc)
 
 Tu run the App:
