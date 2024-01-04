@@ -25,7 +25,8 @@ def cargar_datos(pregunta, relevant_documents):
 
     llm = AzureChatOpenAI(
         deployment_name="chat",
-        model_name="gpt-35-turbo-16k"
+        model_name="gpt-35-turbo-16k",
+        temperature=0.0
     )
         
     from langchain.schema import (
@@ -36,10 +37,12 @@ def cargar_datos(pregunta, relevant_documents):
 
     # Agregar el catálogo al prompt
     messages = [
-        SystemMessage(content=f"""Sos un vendedor de telefonos celulares y deberás responder en español. Dar explicaciones de las decisiones y por qué se recomienda ese modelo particular, en lenguaje coloquial y sin términos demasiado técnicos, junto con otras alternativas en caso de querer opciones. Solo recomienda modelos de telefonos que esten disponibles en el catalogo. Los telefonos estan segmentados en 'performance_and_speed', 'camera_quality' y 'display_quality' (high, medium y low). Intenta identificar las caracteristicas deseadas por el usuario para dar recomendacion sobre modelos del catalogo.
+        SystemMessage(content=f"""Sos un vendedor de telefonos celulares y deberás responder en español. Dar explicaciones de las decisiones y por qué se recomienda ese modelo particular, en lenguaje coloquial y sin términos demasiado técnicos, junto con otras alternativas en caso de querer opciones. Solo recomienda modelos de telefonos que esten disponibles en el catalogo. Los telefonos estan segmentados en 'performance_y_velocidad', 'camara_calidad' y 'pantalla_calidad' con valores Alta, Media o Baja. Intenta identificar las caracteristicas deseadas por el usuario para dar recomendacion sobre modelos del catalogo.
 
-        Sources:    
+        Telefonos seleccionados del Catalogo:    
         {str(relevant_documents)}
+
+        No inventes modelos de telefonos. Usa exclusivamente los telefonos seleccionados del catalogo para dar tu recomendacion.
         """)
     ]
 
