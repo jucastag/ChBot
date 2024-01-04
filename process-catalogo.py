@@ -15,17 +15,18 @@ text_embedder = TextEmbedder()
 
 # Iterate over each phone in the catalog
 for phone_data in catalog:
-    # Extract relevant information about the phone
-    phone_model = phone_data["modelo"]
+    # Convert the phone data to a JSON-formatted string
     phone_content = json.dumps(phone_data, ensure_ascii=False)
 
     # Calculate embeddings for the phone content
     phone_embeddings = text_embedder.embed_content(phone_content)
+    print(phone_content)
 
     # Add a new metadata field with the embeddings to the phone data
     phone_data["contentVector"] = phone_embeddings
 
     # Save the phone data with embeddings to a separate JSON file in the 'output' folder
+    phone_model = phone_data["modelo"]
     output_file_path = os.path.join(output_folder, f"{phone_model}.json")
     with open(output_file_path, "w", encoding="utf-8") as output_file:
         json.dump(phone_data, output_file, ensure_ascii=False, indent=2)

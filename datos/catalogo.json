@@ -11,9 +11,9 @@
     "camara_frontal": "10 MP",
     "sistema_operativo": "Android 11",
     "bateria": "4000 mAh",
-    "performance_and_speed": "High",
-    "camera_quality": "High",
-    "display_quality": "High"
+    "performance_y_velocidad": "Alta",
+    "camara_calidad": "Alta",
+    "pantalla_calidad": "Alta"
   },
   {
     "modelo": "iPhone 12 Pro",
@@ -27,9 +27,9 @@
     "camara_frontal": "12 MP",
     "sistema_operativo": "iOS 14",
     "bateria": "2815 mAh",
-    "performance_and_speed": "High",
-    "camera_quality": "High",
-    "display_quality": "High"
+    "performance_y_velocidad": "Alta",
+    "camara_calidad": "Alta",
+    "pantalla_calidad": "Alta"
   },
   {
     "modelo": "Google Pixel 5",
@@ -43,9 +43,9 @@
     "camara_frontal": "8 MP",
     "sistema_operativo": "Android 11",
     "bateria": "4080 mAh",
-    "performance_and_speed": "Medium",
-    "camera_quality": "Medium",
-    "display_quality": "High"
+    "performance_y_velocidad": "Media",
+    "camara_calidad": "Media",
+    "pantalla_calidad": "Alta"
   },
   {
     "modelo": "Huawei P40 Pro",
@@ -59,9 +59,9 @@
     "camara_frontal": "32 MP + TOF 3D",
     "sistema_operativo": "EMUI 10.1 (basado en Android 10)",
     "bateria": "4200 mAh",
-    "performance_and_speed": "Medium",
-    "camera_quality": "High",
-    "display_quality": "High"
+    "performance_y_velocidad": "Media",
+    "camara_calidad": "Alta",
+    "pantalla_calidad": "Alta"
   },
   {
     "modelo": "OnePlus 9 Pro",
@@ -74,9 +74,9 @@
     "camara_principal": "48 MP + 50 MP + 8 MP + 2 MP",
     "camara_frontal": "",
     "sistema_operativo": "",
-    "performance_and_speed": "High",
-    "camera_quality": "High",
-    "display_quality": "High"
+    "performance_y_velocidad": "Alta",
+    "camara_calidad": "Alta",
+    "pantalla_calidad": "Alta"
   },
   {
     "modelo": "Samsung Galaxy Note 20",
@@ -90,9 +90,9 @@
     "camara_frontal": "10 MP",
     "sistema_operativo": "Android 10",
     "bateria": "4300 mAh",
-    "performance_and_speed": "High",
-    "camera_quality": "High",
-    "display_quality": "High"
+    "performance_y_velocidad": "Alta",
+    "camara_calidad": "Alta",
+    "pantalla_calidad": "Alta"
   },
   {
     "modelo": "iPhone SE (2020)",
@@ -106,9 +106,9 @@
     "camara_frontal": "7 MP",
     "sistema_operativo": "iOS 13",
     "bateria": "1821 mAh",
-    "performance_and_speed": "Medium",
-    "camera_quality": "Medium",
-    "display_quality": "Medium"
+    "performance_y_velocidad": "Media",
+    "camara_calidad": "Media",
+    "pantalla_calidad": "Media"
   },
   {
     "modelo": "Xiaomi Mi 11",
@@ -122,9 +122,9 @@
     "camara_frontal": "20 MP",
     "sistema_operativo": "MIUI 12 (basado en Android 11)",
     "bateria": "4600 mAh",
-    "performance_and_speed": "High",
-    "camera_quality": "High",
-    "display_quality": "High"
+    "performance_y_velocidad": "Alta",
+    "camara_calidad": "Alta",
+    "pantalla_calidad": "Alta"
   },
   {
     "modelo": "Sony Xperia 1 III",
@@ -138,9 +138,9 @@
     "camara_frontal": "8 MP",
     "sistema_operativo": "Android 11",
     "bateria": "4500 mAh",
-    "performance_and_speed": "High",
-    "camera_quality": "High",
-    "display_quality": "High"
+    "performance_y_velocidad": "Alta",
+    "camara_calidad": "Alta",
+    "pantalla_calidad": "Alta"
   },
   {
     "modelo": "Motorola Moto G Power (2021)",
@@ -154,8 +154,8 @@
     "camara_frontal": "8 MP",
     "sistema_operativo": "Android 10",
     "bateria": "5000 mAh",
-    "performance_and_speed": "Medium",
-    "camera_quality": "Medium",
-    "display_quality": "Medium"
+    "performance_y_velocidad": "Media",
+    "camara_calidad": "Media",
+    "pantalla_calidad": "Media"
   }
 ]

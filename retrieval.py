@@ -16,8 +16,10 @@ AZURE_OPENAI_EMBEDDING_MODEL = os.environ.get("AZURE_OPENAI_EMBEDDING_MODEL")
 TERM_SEARCH_APPROACH='term'
 VECTOR_SEARCH_APPROACH='vector'
 HYBRID_SEARCH_APPROACH='hybrid'
-AZURE_SEARCH_USE_SEMANTIC=os.environ.get("AZURE_SEARCH_USE_SEMANTIC")  or "false"
-AZURE_SEARCH_APPROACH=os.environ.get("AZURE_SEARCH_APPROACH") or VECTOR_SEARCH_APPROACH
+#AZURE_SEARCH_USE_SEMANTIC=os.environ.get("AZURE_SEARCH_USE_SEMANTIC")  or "false"
+AZURE_SEARCH_USE_SEMANTIC="false"
+#AZURE_SEARCH_APPROACH=os.environ.get("AZURE_SEARCH_APPROACH") or VECTOR_SEARCH_APPROACH
+AZURE_SEARCH_APPROACH=VECTOR_SEARCH_APPROACH
 
 AZURE_SEARCH_SERVICE = os.environ.get("AZURE_SEARCH_SERVICE")
 AZURE_SEARCH_INDEX = os.environ.get("AZURE_SEARCH_INDEX")
@@ -32,7 +34,7 @@ AZURE_SEARCH_SEMANTIC_SEARCH_LANGUAGE = os.environ.get("AZURE_SEARCH_SEMANTIC_SE
 AZURE_SEARCH_ENABLE_IN_DOMAIN = os.environ.get("AZURE_SEARCH_ENABLE_IN_DOMAIN") or "true"
 AZURE_SEARCH_ENABLE_IN_DOMAIN =  True if AZURE_SEARCH_ENABLE_IN_DOMAIN == "true" else False
 
-AZURE_SEARCH_TOP_K = os.environ.get("AZURE_SEARCH_CONTENT_COLUMNS") or "3"
+AZURE_SEARCH_TOP_K = "3"
 
 def generate_embeddings(text):
 
@@ -58,9 +60,9 @@ def retrieve_documents(input: str) -> str:
 
         # prepare body
         body = {
-            "select": "modelo,marca,pantalla,resolucion_pantalla,procesador,memoria_ram,almacenamiento,camara_principal,camara_frontal,sistema_operativo,bateria,performance_and_speed,camera_quality,display_quality",
+            "select": "modelo,marca,pantalla,resolucion_pantalla,procesador,memoria_ram,almacenamiento,camara_principal,camara_frontal,sistema_operativo,bateria,performance_y_velocidad,camara_calidad,pantalla_calidad",
             #"filter": filter_query,
-            "top": int(AZURE_SEARCH_TOP_K)
+            "top": AZURE_SEARCH_TOP_K
         }    
         if AZURE_SEARCH_APPROACH == TERM_SEARCH_APPROACH:
             body["search"] = search_query
