@@ -29,6 +29,9 @@ Expected filter query string example N°4: "". #Feature valuation not posible
 For example N°5: "Busco celulares con android de gama media. la camara y pantalla pueden ser de menor calidad tambien" 
 Expected filter query string example N°5: "(performance_y_velocidad eq 'Media') and (camara_calidad eq 'Media' or camara_calidad eq 'Baja') and (pantalla_calidad eq 'Baja' or pantalla_calidad eq 'Media')"
 
+For example N°6: "Busco celulares gama media" 
+Expected filter query string example N°6: "(performance_y_velocidad eq 'Media') and (camara_calidad eq 'Media') and (pantalla_calidad eq 'Media')"
+
 Use these synonyms as a guide to interpret the input to generate the values for 'performance_y_velocidad', 'camara_calidad' and 'pantalla_calidad' of the filter query string:
 synonyms of Alta: High, Alta, elevada, buena, bueno, lo mejor, el mejor, tope de gama, top, gama alta, alta calidad, caro, costoso.
 synonyms of Media: Medio, promedio, mediana, gama media, calidad media.
