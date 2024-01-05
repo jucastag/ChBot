@@ -3,7 +3,7 @@ from flask import Flask, render_template, request
 from langchain.chat_models import AzureChatOpenAI
 from retrieval import retrieve_documents
 from dotenv import load_dotenv
-#from filterquery import filterQuery
+from filterQuery import generate_filter_query
 
 app = Flask(__name__)
 
@@ -15,6 +15,7 @@ os.environ['AZURE_SEARCH_API_VERSION'] = os.getenv("AZURE_SEARCH_API_VERSION")
 os.environ['AZURE_SEARCH_SERVICE_KEY'] = os.getenv("AZURE_SEARCH_SERVICE_KEY")
 
 os.environ['OPENAI_API_KEY'] = os.getenv("OPENAI_API_KEY")
+os.environ['OPENAI_API_KEY_2'] = os.getenv("OPENAI_API_KEY_2")
 os.environ['OPENAI_API_TYPE'] = os.getenv("OPENAI_API_TYPE")
 os.environ['OPENAI_API_VERSION'] = os.getenv("OPENAI_API_VERSION")
 os.environ['OPENAI_API_BASE'] = os.getenv("OPENAI_API_BASE")
@@ -68,13 +69,13 @@ def query():
     if not pregunta or pregunta.strip() == "." or pregunta.strip() == "":
         return "Por favor, haz una pregunta válida referida al catálogo de celulares."
     print(f"pregunta: {pregunta}")
-    #ask = str(pregunta)
-    #filter_query = filterQuery(ask)
+    # Generate filter query
+    filter_query = generate_filter_query(pregunta)
+    print(f"Filter Query: {filter_query}")
 
     try:
-        relevant_documents = retrieve_documents(pregunta)
+        relevant_documents = retrieve_documents(pregunta, filter_query)
         print(f"Sources: {relevant_documents}")
-        #print(f"Filter query: {filter_query}")
         respuesta = str(cargar_datos(pregunta, relevant_documents))
         print(f"Respuesta: {respuesta}")
         respuesta = respuesta[9:].replace('\\n\\n', '<br><br>')

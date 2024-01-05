@@ -48,7 +48,7 @@ def generate_embeddings(text):
     embeddings = response['data'][0]['embedding']
     return embeddings
 
-def retrieve_documents(input: str) -> str:
+def retrieve_documents(input: str, filter_query: str) -> str:
     search_results = []
     search_query = input
     try:
@@ -61,7 +61,7 @@ def retrieve_documents(input: str) -> str:
         # prepare body
         body = {
             "select": "modelo,marca,pantalla,resolucion_pantalla,procesador,memoria_ram,almacenamiento,camara_principal,camara_frontal,sistema_operativo,bateria,performance_y_velocidad,camara_calidad,pantalla_calidad",
-            #"filter": filter_query,
+            "filter": filter_query,
             "top": AZURE_SEARCH_TOP_K
         }    
         if AZURE_SEARCH_APPROACH == TERM_SEARCH_APPROACH:

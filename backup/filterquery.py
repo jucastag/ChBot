@@ -1,111 +1,71 @@
-import json
-import openai
-import logging
 import os
 from dotenv import load_dotenv
-from shared.util import call_semantic_function
+import semantic_kernel as sk
+from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
 
 load_dotenv()
 
-import semantic_kernel as sk
-import semantic_kernel.connectors.ai.open_ai as sk_oai
-from semantic_kernel.connectors.ai.open_ai.semantic_functions.open_ai_chat_prompt_template import (
-    OpenAIChatPromptTemplate,
-)
-from semantic_kernel.connectors.ai.open_ai.utils import (
-    chat_completion_with_function_call,
-    get_function_calling_object,
-)
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_API_BASE = os.getenv("OPENAI_API_BASE")
+AZURE_OPENAI_DEPLOYMENT = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+endpoint=OPENAI_API_BASE
+deployment_name=AZURE_OPENAI_DEPLOYMENT
+api_key=OPENAI_API_KEY
 
-# logging level
+kernel = sk.Kernel()
 
-logging.getLogger('azure').setLevel(logging.WARNING)
-LOGLEVEL = os.environ.get('LOGLEVEL', 'INFO').upper()
-logging.basicConfig(level=LOGLEVEL)
-myLogger = logging.getLogger(__name__)
+deployment, api_key, endpoint = AZURE_OPENAI_DEPLOYMENT, OPENAI_API_KEY, OPENAI_API_BASE
+azure_chat_service = AzureChatCompletion(deployment_name="chat", endpoint=endpoint, api_key=api_key)   # set the deployment name to the value of your chat model
+kernel.add_chat_service("chat_completion", azure_chat_service)
 
-# Env Variables
-AZURE_OPENAI_CHATGPT_MODEL = os.environ.get("AZURE_OPENAI_CHATGPT_MODEL")
-AZURE_OPENAI_TEMPERATURE = os.environ.get("AZURE_OPENAI_TEMPERATURE") or "0.17"
-AZURE_OPENAI_TEMPERATURE = float(AZURE_OPENAI_TEMPERATURE)
-AZURE_OPENAI_TOP_P = os.environ.get("AZURE_OPENAI_TOP_P") or "0.27"
-AZURE_OPENAI_TOP_P = float(AZURE_OPENAI_TOP_P)
-AZURE_OPENAI_RESP_MAX_TOKENS = os.environ.get("AZURE_OPENAI_MAX_TOKENS") or "1000"
-AZURE_OPENAI_RESP_MAX_TOKENS = int(AZURE_OPENAI_RESP_MAX_TOKENS)
-SYSTEM_MESSAGE_PATH = f"orc/prompts/system_message.prompt"
+sk_prompt = """
+{{$input}}
 
-AZURE_OPENAI_DEPLOYMENT = os.environ.get("AZURE_OPENAI_DEPLOYMENT")
-OPENAI_API_BASE = os.environ.get("OPENAI_API_BASE")
-OPENAI_API_VERSION = os.environ.get("OPENAI_API_VERSION")
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+## Task Goal
 
-def initialize_kernel():
-    kernel = sk.Kernel(log=myLogger)
-    openai.api_type = "azure"
-    openai.api_base = os.environ.get("OPENAI_API_BASE")
-    openai.api_version = os.environ.get("OPENAI_API_VERSION")
-    openai.api_key =  os.environ.get("OPENAI_API_KEY")
-    kernel.add_chat_service(
-        "chat-gpt",
-        sk_oai.AzureChatCompletion(AZURE_OPENAI_DEPLOYMENT, 
-                                    OPENAI_API_BASE, 
-                                    OPENAI_API_KEY, 
-                                    api_version=OPENAI_API_VERSION,
-                                    ad_auth=True), 
-    )
-    return kernel
+The task is to generate a filter query string from the input. If you think is not posible to generate a filter query string from the input, generate the filter query string as an empty string "empty_string"
 
-def import_plugins(kernel, plugins_directory, filter_plugin_name):
-    filter_plugin = kernel.import_semantic_skill_from_directory(plugins_directory, filter_plugin_name)
-    return filter_plugin
+## Task instructions
 
-def create_context(kernel, ask):
-    context = kernel.create_new_context()
-    context.variables["ask"] = ask
-    return context
+This function is used to create a filter query string from the input.
+Data to be filtered are cellphone models and they have filterable fields for 'performance_and_speed' 'camera_quality' and 'display_quality' with 'High' 'Medium' or 'Low' posible values.
+Users will use spanish and you will try to generate a filter query string. 
 
-def get_filterQuery(filter_plugin, context):
-    """
-    This function is used to create a filter query string from the user ask to be used later in Azure Cognitive Searchfor filtering purposes.
-    Data stored in Cognitive search are cellphone models and they have metadata values for 'performance_and_speed' 'camera_quality' and 'display_quality' with 'High' 'Medium' or 'Low' posible values.
-    Users will use spanish and you should try to guess if a filter query string could be generated from the ask. 
+Use these synonyms as a guide to interpret the input to generate the values for 'performance_and_speed', 'camera_quality' and 'display_quality' of the filter query string:
+synonyms of High: Alta, elevada, buena, bueno, lo mejor, el mejor, tope de gama, top, gama alta, alta calidad, caro, costoso.
+synonyms of Medium: Media, medio, promedio, mediana, gama media, calidad media.
+synonyms of Low: Bajo, baja, barato, economico, gama baja, calidad baja.
 
-    Synonyms of high: Alta, elevada, buena, caro, costoso etc
-    Synonyms of Medium: Media, mediana, mediano, promedio etc
-    Synonyms of Low: Baja, poca, bajo, poco, barato, malo, mala, economico etc
+input example N°1: "Busco un celular iPhone de gama media pero con display de alta calidad"
+Expected filter query string example N°1: "(performance_and_speed eq 'Medium') and (camera_quality eq 'Medium') and (display_quality eq 'High')"
 
-    Filter query string example N°1: (performance_and_speed eq 'Medium') and (camera_quality eq 'Medium') and (display_quality eq 'High')
-    Filter query string example N°2: (performance_and_speed eq 'Medium') and (camera_quality eq 'Medium' or camera_quality eq 'Low') and (display_quality eq 'High' or display_quality eq 'Medium')
+input example N°2: "Busco celulares con android de gama media. la camara y pantalla pueden ser de menor calidad tambien" 
+Expected filter query string example N°2: "(performance_and_speed eq 'Medium') and (camera_quality eq 'Medium' or camera_quality eq 'Low') and (display_quality eq 'Low' or display_quality eq 'Medium')"
 
-    If a filter query string could be infered from ask, a filter query string is generated to search for sources.
-    If you think is not posible to infer a filter query string from the ask, leave the filte query string as an empty string ""
+input example N°3: "Necesito un celular economico para usar en el trabajo" 
+Expected filter query string example N°3: "(performance_and_speed eq 'Low') and (camera_quality eq 'Low') and (display_quality eq 'Low')"
 
-    synonyms of High: Alta, elevada, buena, bueno, lo mejor, tope de gama, top, gama alta.
-    synonyms of Medium: Media, medio, promedio, mediana, gama media.
-    synonyms of Low: Bajo, baja, barato, economico, gama baja.
-   
-    Returns:
-    str: A string containing the filter query string. 
-        'filterQuery' (str): The filter query string generated from ask. Defaults to '' if not posible to generate.
-    """    
-    filterQuery_response= {"filterQuery":  ""}
-    sk_response = call_semantic_function(filter_plugin["filterQuery"], context)
-    if context.error_occurred:
-        logging.error(f"[code_orchestration] error when executing RAG flow (Triage). SK error: {context.last_error_description}")
-        filterQuery_response["bypass"] = True
-    try:
-        sk_response_json = json.loads(sk_response.result)
-    except json.JSONDecodeError:
-        logging.error(f"[code_orchestration] error when executing RAG flow (Triage). Invalid json: {sk_response.result}")
-        sk_response_json = {}        
-    sk_response_json = json.loads(sk_response.result)
-    filterQuery_response["filterQuery"] = sk_response_json.get('intent', 'none')
-    return filterQuery_response
+input example N°4: "Hola, busco un celular samsung que tenga camara frontal" 
+Expected filter query string example N°4: "empty_string"
 
-# initialize semantic kernel
-def filterQuery (ask):
-    kernel = initialize_kernel()
-    filter_plugin = import_plugins(kernel, "plugins", "filterQuery")
-    context = create_context(kernel, ask)
-    filterQuery_response = get_filterQuery(filter_plugin, context)
-    return filterQuery_response
+input example N°5: "Necesito un celular para usar en el trabajo" 
+Expected filter query string example N°5: "empty_string"
+
+Use examples above to thouroughly analyze the input and generate filter query string or empty_string object accordingly. Only references to performance_and_speed, camera_quality and display_quality should produce filter query string.
+If you think is not posible to infer a filter query string from the input, leave the filter query string as an empty string "empty_string"
+
+- The output is a string object with the generated filter query string.
+- Do not generate code. The only output should be the generated filter query string object.
+- Do not include the word string at begginning of the output.
+- The output should not include the word ANSWER.
+
+"""
+text = """
+    Hola, busco un celular.
+"""
+
+tldr_function = kernel.create_semantic_function(prompt_template=sk_prompt, max_tokens=300, temperature=0, top_p=0.5)
+
+summary = tldr_function(text)
+
+print(f"Output: {summary}") # Output: Robots must not harm humans.
