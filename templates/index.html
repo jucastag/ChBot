@@ -8,6 +8,7 @@
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
   </head>
   <body>
+    <div class="page-container-home">
     <button id="chat-toggle" class="chat-toggle-button" onclick="toggleChatbot()">
       <img id="chat-toggle-icon" src="/static/img/button.svg" alt="">
     </button>
@@ -20,7 +21,7 @@
           <img class="robot" src="/static/img/robot.svg" alt="">
           <p>{{ chatbot_name }}</p>
         </div>
-        <button class="close-button" onclick="closeChatbot()">Cerrar</button>
+        <button class="close-button" onclick="closeChatbot()"><img class="chat-close-icon" src="/static/img/Icon-ionic-md-close2.svg" alt=""></button>
       </div>
       <div id="chat-messages" class="chat-messages"></div>
       <div class="chat-input">
@@ -28,5 +29,6 @@
         <button id="send-button" onclick="sendMessage(event)" disabled></button>
       </div>
     </div>
+  </div>
   </body>
 </html>
