@@ -77,7 +77,8 @@ def query():
         respuesta = str(cargar_datos(pregunta, Sources))
         print(f"Respuesta: {respuesta}")
         respuesta = respuesta[9:].replace('\\n\\n', '<br><br>')
-        respuesta = respuesta[:-1]
+        respuesta = respuesta.replace('additional_kwargs={} example=Fals', '')
+
         return respuesta
     
     except Exception as e:
