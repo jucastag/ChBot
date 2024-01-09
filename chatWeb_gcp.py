@@ -77,7 +77,8 @@ def query():
         respuesta = str(cargar_datos(pregunta, Sources))
         print(f"Respuesta: {respuesta}")
         respuesta = respuesta[9:].replace('\\n\\n', '<br><br>')
-        respuesta = respuesta.replace('additional_kwargs={} example=Fals', '')
+        respuesta = respuesta[9:].replace('\'', '')
+        respuesta = respuesta.replace('additional_kwargs={} example=False', '')
 
         return respuesta
     
