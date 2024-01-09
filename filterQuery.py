@@ -10,11 +10,11 @@ model = AzureChatOpenAI(temperature=0, deployment_name="chat")
 
 template = """
 ## Task Goal
-The task is to generate a filter query string from the input. If you think is not posible to generate a filter query string from the input, generate the filter query string as an empty string ""
+The task is to generate a filter query string from the input. If you think is not posible to generate a filter query string from the input, generate the filter query string as an empty string "".
 Evaluation features: 'performance_y_velocidad', 'camara_calidad', 'pantalla_calidad'
 Posible values for each feature: 'Alta', 'Media', 'Baja'.
 
-For example N°1: "Necesito un celular economico para usar en el trabajo" 
+For example N°1: "Busco un celular economico para usar en el trabajo" 
 Expected filter query string example N°1: "(performance_y_velocidad eq 'Baja') and (camara_calidad eq 'Baja') and (pantalla_calidad eq 'Baja')"
 
 For example N°2: "Necesito un celular para usar en el trabajo" 

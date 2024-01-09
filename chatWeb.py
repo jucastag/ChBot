@@ -22,7 +22,7 @@ os.environ['OPENAI_API_BASE'] = os.getenv("OPENAI_API_BASE")
 os.environ['AZURE_OPENAI_EMBEDDING_MODEL'] = os.getenv("AZURE_OPENAI_EMBEDDING_MODEL")
 os.environ['AZURE_OPENAI_DEPLOYMENT'] = os.getenv("AZURE_OPENAI_DEPLOYMENT")
 
-def cargar_datos(pregunta, relevant_documents):
+def cargar_datos(pregunta, Sources):
 
     llm = AzureChatOpenAI(
         deployment_name="chat",
@@ -38,12 +38,9 @@ def cargar_datos(pregunta, relevant_documents):
 
     # Agregar el catálogo al prompt
     messages = [
-        SystemMessage(content=f"""Sos un vendedor de telefonos celulares y deberás responder en español. Dar explicaciones de las decisiones y por qué se recomienda ese modelo particular, en lenguaje coloquial y sin términos demasiado técnicos, junto con otras alternativas en caso de querer opciones. Solo recomienda modelos de telefonos que esten disponibles en el catalogo. Los telefonos estan segmentados en 'performance_y_velocidad', 'camara_calidad' y 'pantalla_calidad' con valores Alta, Media o Baja. Intenta identificar las caracteristicas deseadas por el usuario para dar recomendacion sobre modelos del catalogo.
-
-        Telefonos seleccionados del Catalogo:    
-        {str(relevant_documents)}
-
-        No inventes modelos de telefonos. Usa exclusivamente los telefonos seleccionados del catalogo para dar tu recomendacion.
+        SystemMessage(content=f"""You are a cellphone salesperson, and you should respond in Spanish. Provide explanations for the decisions and why that particular model is recommended, using colloquial language without overly technical terms, along with other alternatives in case the user wants options. Only recommend phone models that are available in the sources below. If there are no phone models in the sources, inform the user that no matching models were found for their search.
+        Sources:
+        {Sources}
         """)
     ]
 
@@ -76,7 +73,8 @@ def query():
     try:
         relevant_documents = retrieve_documents(pregunta, filter_query)
         print(f"Sources: {relevant_documents}")
-        respuesta = str(cargar_datos(pregunta, relevant_documents))
+        Sources = str(relevant_documents)
+        respuesta = str(cargar_datos(pregunta, Sources))
         print(f"Respuesta: {respuesta}")
         respuesta = respuesta[9:].replace('\\n\\n', '<br><br>')
         respuesta = respuesta[:-1]
