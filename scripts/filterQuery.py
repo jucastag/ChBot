@@ -43,7 +43,7 @@ synonyms of Baja: Baja, barato, economico, gama baja, calidad baja.
 - The output should not include the word ANSWER.
 - If feature valuation is not fully interpretable return an empty string object "".
 
-input: {input}
+Input: {input}
 """
 
 def generate_filter_query(input_text):

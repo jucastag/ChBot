@@ -2,7 +2,7 @@ import os
 from flask import Flask, request
 from flask import Flask, render_template
 from langchain.chat_models import AzureChatOpenAI
-from retrieval import retrieve_documents
+from scripts.retrieval import retrieve_documents
 from dotenv import load_dotenv
 
 app = Flask(__name__)

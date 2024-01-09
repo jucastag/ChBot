@@ -34,7 +34,7 @@ AZURE_SEARCH_SEMANTIC_SEARCH_LANGUAGE = os.environ.get("AZURE_SEARCH_SEMANTIC_SE
 AZURE_SEARCH_ENABLE_IN_DOMAIN = os.environ.get("AZURE_SEARCH_ENABLE_IN_DOMAIN") or "true"
 AZURE_SEARCH_ENABLE_IN_DOMAIN =  True if AZURE_SEARCH_ENABLE_IN_DOMAIN == "true" else False
 
-AZURE_SEARCH_TOP_K = "3"
+AZURE_SEARCH_TOP_K = "6"
 
 def generate_embeddings(text):
 
@@ -48,7 +48,7 @@ def generate_embeddings(text):
     embeddings = response['data'][0]['embedding']
     return embeddings
 
-def retrieve_documents(input: str, filter_query: str) -> str:
+def retrieve_documents(input: str) -> str:
     search_results = []
     search_query = input
     try:
@@ -60,8 +60,8 @@ def retrieve_documents(input: str, filter_query: str) -> str:
 
         # prepare body
         body = {
-            "select": "modelo,marca,pantalla,resolucion_pantalla,procesador,memoria_ram,almacenamiento,camara_principal,camara_frontal,sistema_operativo,bateria,performance_y_velocidad,camara_calidad,pantalla_calidad",
-            "filter": filter_query,
+            "select": "name,type,code,price,precio_de_oferta,visibility,estado,business_b2b,store,source,in_stock_default,default_qty,Default_salable_qty,terminals_source,in_stock_terminals,terminals_qty,terminals_salable_qty,enabled_discount_i_am_movistar",
+            #"filter": filter_query,
             "top": AZURE_SEARCH_TOP_K
         }    
         if AZURE_SEARCH_APPROACH == TERM_SEARCH_APPROACH:

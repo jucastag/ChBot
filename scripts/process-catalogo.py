@@ -3,7 +3,7 @@ import os
 from embedder.text_embedder import TextEmbedder
 
 # Load the catalog from the 'datos' folder
-catalog_file_path = 'datos/catalogo.json'
+catalog_file_path = 'datos/movistar_products_export.json'
 with open(catalog_file_path, 'r', encoding='utf-8') as catalog_file:
     catalog = json.load(catalog_file)
 
@@ -26,7 +26,7 @@ for phone_data in catalog:
     phone_data["contentVector"] = phone_embeddings
 
     # Save the phone data with embeddings to a separate JSON file in the 'output' folder
-    phone_model = phone_data["modelo"]
+    phone_model = phone_data["name"]
     output_file_path = os.path.join(output_folder, f"{phone_model}.json")
     with open(output_file_path, "w", encoding="utf-8") as output_file:
         json.dump(phone_data, output_file, ensure_ascii=False, indent=2)

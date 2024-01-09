@@ -1,9 +1,9 @@
 import os
 from flask import Flask, render_template, request
 from langchain.chat_models import AzureChatOpenAI
-from retrieval import retrieve_documents
+from scripts.retrieval import retrieve_documents
 from dotenv import load_dotenv
-from filterQuery import generate_filter_query
+from scripts.filterQuery import generate_filter_query
 
 app = Flask(__name__)
 
@@ -67,11 +67,11 @@ def query():
         return "Por favor, haz una pregunta válida referida al catálogo de celulares."
     print(f"pregunta: {pregunta}")
     # Generate filter query
-    filter_query = generate_filter_query(pregunta)
-    print(f"Filter Query: {filter_query}")
+    #filter_query = generate_filter_query(pregunta)
+    #print(f"Filter Query: {filter_query}")
 
     try:
-        relevant_documents = retrieve_documents(pregunta, filter_query)
+        relevant_documents = retrieve_documents(pregunta)
         print(f"Sources: {relevant_documents}")
         Sources = str(relevant_documents)
         respuesta = str(cargar_datos(pregunta, Sources))
