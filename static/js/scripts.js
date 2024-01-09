@@ -36,18 +36,18 @@ const maxTokensInput = document.querySelector('#max_tokens');
 const responseElement = document.querySelector('#response');
 const spinnerElement = document.querySelector('.spinner');
 
-
+let waitingForResponse = false;  // Variable global para controlar el estado de espera
 // Función para enviar un mensaje
 function sendMessage(event) {
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-button');
     if (event.key === 'Enter' || event.target.id === 'send-button') {
         event.preventDefault();
-        if (userInput.value.trim() !== '') {
+        if (userInput.value.trim() !== '' && !waitingForResponse) {
             sendUserMessage();
         }
     }
-    sendButton.disabled = userInput.value.trim() === '';
+    sendButton.disabled = userInput.value.trim() === '' || waitingForResponse;
 }
 async function sendUserMessage() {
     var userInput = document.getElementById('user-input');
@@ -58,22 +58,34 @@ async function sendUserMessage() {
     userMessage.innerHTML = userInput.value + '<span class="message-time">' + getTime() + '</span>';
     chatMessages.appendChild(userMessage);
 
+    waitingForResponse = true;
     // Obtener la respuesta del bot utilizando una solicitud fetch
-    const prompt = userInput.value;
-    const response = await fetch(`/openai?pregunta=` + prompt);
-    console.log('Enviando solicitud a /openai?pregunta=' + prompt);
-    console.log('Respuesta de la solicitud', response);
-    const botResponse = await response.text();
+    try {
+        const prompt = userInput.value;
+        const response = await fetch(`/openai?pregunta=${prompt}`);
+        console.log('Enviando solicitud a /openai?pregunta=' + prompt);
+        
+        // Manejar la respuesta de la solicitud
+        const botResponse = await response.text();
+        console.log('Bot response is', botResponse);
 
-    console.log('Bot response is', botResponse);
+        var botMessage = document.createElement('div');
+        botMessage.className = 'message bot-message';
+        botMessage.innerHTML = botResponse + '<span class="message-time">' + getTime() + '</span>';
+        chatMessages.appendChild(botMessage);
 
-    var botMessage = document.createElement('div');
-    botMessage.className = 'message bot-message';
-    botMessage.innerHTML = botResponse + '<span class="message-time">' + getTime() + '</span>';
-    chatMessages.appendChild(botMessage);
+        userInput.value = '';
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    } catch (error) {
+        console.error('Error al obtener la respuesta del bot:', error);
+    } finally {
+        // Después de obtener la respuesta (o en caso de error), restablecer el estado de espera a false
+        waitingForResponse = false;
 
-    userInput.value = '';
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+        // Habilitar el botón nuevamente
+        const sendButton = document.getElementById('send-button');
+        sendButton.disabled = userInput.value.trim() === '';
+    }
 }
 // Crear un objeto AbortController
 const abortController = new AbortController();
