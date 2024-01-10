@@ -210,7 +210,19 @@ button:disabled {
 
 .page-container-home{
     background-image: url("../img/background.png");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center top;
     height: 4269px;
     width: 100%;
     margin: 0;
+}
+
+@media screen and (max-width: 767px) {
+    .page-container-home {
+        background-image: url("../img/background-mobile.png"); 
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: center top;
+    }
 }
