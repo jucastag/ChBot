@@ -53,10 +53,3 @@ gcloud app deploy
 ```
 
 This will deploy the application based on the configurations specified in the app.yaml file, and files listed in the .gcloudignore file will be ignored.
-The chatWeb_gcp.py file will be considered as the main file. Please ensure that the following section is commented out (as Gunicorn in App Engine handles it):
-
-```py
-Copy code
-if __name__ == '__main__':
-    app.run(debug=False, host='localhost',port= 8080)
-```
