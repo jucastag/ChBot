@@ -226,3 +226,54 @@ button:disabled {
         background-position: center top;
     }
 }
+
+/* ... Estilos anteriores ... */
+
+@media screen and (max-width: 767px) {
+    .bot-message {
+        font-size: 14px;
+    }
+
+    .user-message {
+        font-size: 14px;
+    }
+    
+    .chat-toggle-button {
+        bottom: 20px;
+        right: 20px;
+        padding: 8px 16px;
+    }
+
+    #chat-toggle2 {
+        right: 20px;
+        bottom: 60px;
+    }
+    .chat-container {
+        bottom: 150px; 
+        right: 20px;
+        max-width: 300px;
+        width: 90%;
+        height: 400px;
+    }
+
+    .chat-messages {
+        height: 200px;
+    }
+
+    .chat-input {
+        padding: 10px;
+    }
+
+    input[type="text"] {
+        padding: 8px;
+    }
+
+    button {
+        padding: 8px 16px;
+        margin-left: 8px;
+    }
+
+    #send-button {
+        padding: 18px;
+    }
+}
