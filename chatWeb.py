@@ -1,4 +1,5 @@
 import os
+import time
 from flask import Flask, render_template, request
 from langchain.chat_models import AzureChatOpenAI
 from scripts.retrieval import retrieve_documents
@@ -57,7 +58,8 @@ def cargar_datos(pregunta, Sources):
 @app.route('/')
 def index():
     chatbot_name = 'Chatcel' # reemplaza esto con el nombre de tu chatbot
-    return render_template('index.html', chatbot_name=chatbot_name)
+    timestamp = int(time.time())
+    return render_template('index.html', chatbot_name=chatbot_name, timestamp=timestamp)
 
 @app.route('/openai') # type: ignore
 def query():
