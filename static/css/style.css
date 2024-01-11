@@ -277,3 +277,17 @@ button:disabled {
         padding: 20px;
     }
 }
+
+#speech-button {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green color, you can change this */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+#speech-button:disabled {
+    opacity: 0.5;
+}

@@ -5,6 +5,7 @@ from langchain.chat_models import AzureChatOpenAI
 from scripts.retrieval import retrieve_documents
 from dotenv import load_dotenv
 from scripts.filterQuery import generate_filter_query
+import speech_recognition as sr
 
 app = Flask(__name__)
 
@@ -22,6 +23,20 @@ os.environ['OPENAI_API_VERSION'] = os.getenv("OPENAI_API_VERSION")
 os.environ['OPENAI_API_BASE'] = os.getenv("OPENAI_API_BASE")
 os.environ['AZURE_OPENAI_EMBEDDING_MODEL'] = os.getenv("AZURE_OPENAI_EMBEDDING_MODEL")
 os.environ['AZURE_OPENAI_DEPLOYMENT'] = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+
+def recognize_speech():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        audio = r.listen(source)
+    try:
+        question = r.recognize_google(audio, language="es-ES")  # Specify language if needed
+        return question
+    except sr.UnknownValueError:
+        return ""
+    except sr.RequestError as e:
+        print(f"Speech Recognition request failed: {e}")
+        return ""
 
 def cargar_datos(pregunta, Sources):
 
@@ -73,6 +88,11 @@ def query():
     #print(f"Filter Query: {filter_query}")
 
     try:
+        if pregunta == "speech":
+            pregunta = recognize_speech()
+            if not pregunta:
+                return "No se pudo reconocer la pregunta de audio."
+
         relevant_documents = retrieve_documents(pregunta)
         print(f"Sources: {relevant_documents}")
         Sources = str(relevant_documents)

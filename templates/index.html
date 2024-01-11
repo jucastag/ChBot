@@ -9,26 +9,43 @@
   </head>
   <body>
     <div class="page-container-home">
-    <button id="chat-toggle" class="chat-toggle-button" onclick="toggleChatbot()">
-      <img id="chat-toggle-icon" src="/static/img/button.svg" alt="">
-    </button>
-    <button id="chat-toggle2" class="chat-toggle-button" style="display: none;" onclick="toggleChatbot()">
-      <img id="chat-cross-icon" src="/static/img/Icon-ionic-md-close.svg" alt="">
-    </button>
-    <div id="chat-container" class="chat-container">
-      <div class="chat-header">
-        <div class="contenedor">
-          <img class="robot" src="/static/img/robot.svg" alt="">
-          <p>{{ chatbot_name }}</p>
+      <button id="chat-toggle" class="chat-toggle-button" onclick="toggleChatbot()">
+        <img id="chat-toggle-icon" src="/static/img/button.svg" alt="">
+      </button>
+      <button id="chat-toggle2" class="chat-toggle-button" style="display: none;" onclick="toggleChatbot()">
+        <img id="chat-cross-icon" src="/static/img/Icon-ionic-md-close.svg" alt="">
+      </button>
+      <div id="chat-container" class="chat-container">
+        <div class="chat-header">
+          <div class="contenedor">
+            <img class="robot" src="/static/img/robot.svg" alt="">
+            <p>{{ chatbot_name }}</p>
+          </div>
+          <button class="close-button" onclick="closeChatbot()"><img class="chat-close-icon" src="/static/img/Icon-ionic-md-close2.svg" alt=""></button>
         </div>
-        <button class="close-button" onclick="closeChatbot()"><img class="chat-close-icon" src="/static/img/Icon-ionic-md-close2.svg" alt=""></button>
-      </div>
-      <div id="chat-messages" class="chat-messages"></div>
-      <div class="chat-input">
-        <input id="user-input" type="text" onkeydown="sendMessage(event)" placeholder="Escribe tu mensaje aquí...">
-        <button id="send-button" onclick="sendMessage(event)" disabled></button>
+        <div id="chat-messages" class="chat-messages"></div>
+        <div class="chat-input">
+          <input id="user-input" type="text" onkeydown="sendMessage(event)" placeholder="Escribe tu mensaje aquí...">
+          <button id="send-button" onclick="sendMessage(event)" disabled></button>
+          
+          <!-- Speech Recognition Button -->
+          <button id="speech-button" onclick="startSpeechRecognition()">Mic</button>
+        </div>
       </div>
     </div>
-  </div>
+
+    <!-- Include the necessary JavaScript for speech recognition -->
+    <script>
+      function startSpeechRecognition() {
+        const recognition = new webkitSpeechRecognition();
+        const userInput = document.getElementById("user-input");
+
+        recognition.onresult = (event) => {
+          userInput.value = event.results[0][0].transcript;
+        };
+
+        recognition.start();
+      }
+    </script>
   </body>
 </html>
